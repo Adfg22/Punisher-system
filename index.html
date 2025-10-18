@@ -37,11 +37,11 @@
 <body>
 
 <!-- المربعات -->
-<div class="box" data-name="الاسم 1" data-price="50">الاسم 1</div>
-<div class="box" data-name="الاسم 2" data-price="75">الاسم 2</div>
-<div class="box" data-name="الاسم 3" data-price="100">الاسم 3</div>
-<div class="box" data-name="الاسم 4" data-price="120">الاسم 4</div>
-<div class="box" data-name="الاسم 5" data-price="200">الاسم 5</div>
+<div class="box" data-name="الاسم 1">قياس 1</div>
+<div class="box" data-name="الاسم 2">قياس 2</div>
+<div class="box" data-name="الاسم 3">قياس 3</div>
+<div class="box" data-name="الاسم 4">قياس 4</div>
+<div class="box" data-name="الاسم 5">قياس 5</div>
 
 <script>
 const phone = "+962798315810"; // رقمك
@@ -49,7 +49,13 @@ const phone = "+962798315810"; // رقمك
 document.querySelectorAll('.box').forEach(box => {
     box.addEventListener('click', () => {
         const name = box.getAttribute('data-name'); // الاسم المخزن
-        const price = box.getAttribute('data-price'); // السعر المخزن
+        const price = prompt(`أدخل السعر لـ ${name}:`); // نافذة إدخال السعر
+
+        if(price === null || price.trim() === "") {
+            alert("لم يتم إدخال السعر.");
+            return;
+        }
+
         const now = new Date();
         const date = now.toLocaleDateString('ar-EG');
         const time = now.toLocaleTimeString('ar-EG');
