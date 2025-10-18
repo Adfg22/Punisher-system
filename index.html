@@ -3,53 +3,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>إرسال واتساب بالمربعات</title>
+<title>متجر إطارات السيارات</title>
 <style>
     body {
-        font-family: Arial, sans-serif;
-        background-color: #f0f0f0;
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(135deg, #f0f0f0, #c8e6c9);
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        padding: 20px;
+        padding: 40px;
+        min-height: 100vh;
     }
+
     .box {
-        width: 120px;
-        height: 120px;
-        background-color: #fff;
-        margin: 10px;
-        border: 2px solid #25D366;
-        border-radius: 12px;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%; /* يجعلها دائرية مثل الإطار */
+        background: radial-gradient(circle at 50% 50%, #333, #000);
+        margin: 20px;
+        box-shadow: 0 8px 15px rgba(0,0,0,0.4);
         display: flex;
         align-items: center;
         justify-content: center;
-        cursor: pointer;
-        font-size: 16px;
         text-align: center;
-        transition: transform 0.2s, background-color 0.2s;
+        font-size: 18px;
+        font-weight: bold;
+        color: #fff;
+        cursor: pointer;
+        position: relative;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 6px solid #555; /* إطار خارجي */
     }
+
     .box:hover {
-        transform: scale(1.05);
-        background-color: #e0ffe5;
+        transform: scale(1.1) rotate(-3deg);
+        box-shadow: 0 12px 20px rgba(0,0,0,0.5);
+        border-color: #25D366;
+    }
+
+    .box::after {
+        content: "اضغط للإرسال";
+        position: absolute;
+        bottom: 8px;
+        font-size: 12px;
+        color: #25D366;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .box:hover::after {
+        opacity: 1;
     }
 </style>
 </head>
 <body>
 
-<!-- المربعات -->
-<div class="box" data-name="الاسم 1">قياس 1</div>
-<div class="box" data-name="الاسم 2">قياس 2</div>
-<div class="box" data-name="الاسم 3">قياس 3</div>
-<div class="box" data-name="الاسم 4">قياس 4</div>
-<div class="box" data-name="الاسم 5">قياس 5</div>
+<div class="box" data-name="إطار 1">إطار قياس 1</div>
+<div class="box" data-name="إطار 2">إطار قياس 2</div>
+<div class="box" data-name="إطار 3">إطار قياس 3</div>
+<div class="box" data-name="إطار 4">إطار قياس 4</div>
+<div class="box" data-name="إطار 5">إطار قياس 5</div>
+<div class="box" data-name="إطار 6">إطار قياس 6</div>
 
 <script>
 const phone = "+962798315810"; // رقمك
 
 document.querySelectorAll('.box').forEach(box => {
     box.addEventListener('click', () => {
-        const name = box.getAttribute('data-name'); // الاسم المخزن
-        const price = prompt(`أدخل السعر لـ ${name}:`); // نافذة إدخال السعر
+        const name = box.getAttribute('data-name');
+        const price = prompt(`أدخل السعر لـ ${name}:`);
 
         if(price === null || price.trim() === "") {
             alert("لم يتم إدخال السعر.");
@@ -60,10 +82,9 @@ document.querySelectorAll('.box').forEach(box => {
         const date = now.toLocaleDateString('ar-EG');
         const time = now.toLocaleTimeString('ar-EG');
 
-        const message = `مرحباً، لدي طلب:\nالاسم: ${name}\nالتاريخ: ${date}\nالوقت: ${time}\nالسعر: ${price}`;
+        const message = `مرحباً، لدي طلب:\nالمنتج: ${name}\nالتاريخ: ${date}\nالوقت: ${time}\nالسعر: ${price}`;
 
         const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
-
         window.open(url, '_blank');
     });
 });
